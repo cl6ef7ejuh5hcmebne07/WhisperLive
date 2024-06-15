@@ -1,0 +1,4 @@
+whisper_live/__pycache__/server.cpython-311.pyc
+whisper_live/__pycache__/transcriber_tensorrt.cpython-311.pyc
+whisper_live/__pycache__/transcriber.cpython-311.pyc
+whisper_live/__pycache__/vad.cpython-311.pyc
