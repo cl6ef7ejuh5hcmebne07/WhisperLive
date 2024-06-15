@@ -26,7 +26,7 @@ class Client:
         port=None,
         lang=None,
         translate=False,
-        model="small",
+        model="large-v3",
         srt_file_path="output.srt",
         use_vad=True
     ):
@@ -660,7 +660,7 @@ class TranscriptionClient(TranscriptionTeeClient):
         port,
         lang=None,
         translate=False,
-        model="small",
+        model="large-v3",
         use_vad=True,
         save_output_recording=False,
         output_recording_filename="./output_recording.wav",
@@ -690,7 +690,7 @@ import subprocess
 #from speech.client import TranscriptionClient
 
 def start_cloudflared():
-    cmd = ["cloudflared", "access", "tcp", "--hostname", "speech.librinostri.co", "--url", "localhost:9091"]
+    cmd = ["cloudflared", "access", "tcp", "--hostname", "speech.librinostri.co", "--url", "127.0.0.1:9091"]
     # Inicia o processo sem bloquear o script para esperar que ele termine.
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
     
@@ -699,7 +699,7 @@ def start_cloudflared():
 
 
 if __name__ == "__main__":
-    host='localhost'
+    host='127.0.0.1'
     port='9091'
     lang='pt'
     translate=False
