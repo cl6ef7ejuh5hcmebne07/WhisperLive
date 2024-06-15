@@ -690,7 +690,7 @@ import subprocess
 #from speech.client import TranscriptionClient
 
 def start_cloudflared():
-    cmd = ["cloudflared", "access", "tcp", "--hostname", "speech.librinostri.co", "--url", "127.0.0.1:9091"]
+    cmd = ["cloudflared", "access", "tcp", "--hostname", "speech.librinostri.co", "--url", "localhost:9090"]
     # Inicia o processo sem bloquear o script para esperar que ele termine.
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
     
@@ -699,8 +699,8 @@ def start_cloudflared():
 
 
 if __name__ == "__main__":
-    host='127.0.0.1'
-    port='9091'
+    host='localhost'
+    port='9090'
     lang='pt'
     translate=False
     model="large-v3"
