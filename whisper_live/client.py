@@ -677,3 +677,64 @@ class TranscriptionClient(TranscriptionTeeClient):
             save_output_recording=save_output_recording,
             output_recording_filename=output_recording_filename
         )
+
+
+
+
+#==========================================
+
+
+
+import argparse
+import subprocess
+#from speech.client import TranscriptionClient
+
+def start_cloudflared():
+    cmd = ["cloudflared", "access", "tcp", "--hostname", "speech.librinostri.co", "--url", "localhost:9091"]
+    # Inicia o processo sem bloquear o script para esperar que ele termine.
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+    
+    # Opcional: Imprimir uma mensagem para indicar que o processo foi iniciado.
+    print("Cloudflared process started, continuing with script...")
+
+
+if __name__ == "__main__":
+    host='localhost'
+    port='9091'
+    lang='pt'
+    translate=False
+    model="large-v3"
+
+    start_cloudflared()  # Inicie o Cloudflared antes de prosseguir com o restante do script
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', '-s',
+                        type=str,
+                        default='localhost',
+                        help='host (str): The hostname or IP address of the server. ')
+    
+    parser.add_argument('--port', '-p',
+                        type=int,
+                        default=9091,
+                        help="port (int): The port number to connect to on the server (default is 9091).")
+
+    parser.add_argument('--lang', '-l',
+                        type=str,
+                        default='pt',
+                        help="lang (str, optional): The primary language for transcription (defaults is pt).")
+    
+    parser.add_argument('--translate', '-t',
+                        type=bool,
+                        default=None,
+                        help='translate (bool, optional): Indicates whether translation tasks are required (default is None).')
+    
+    parser.add_argument('--model', '-m',
+                        type=str,
+                        default='large-v3',
+                        help='large-v3 (str, optional): Faster Whisper Model (tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v1, large-v2, large-v3, or large. Default is large-v3).')
+    
+    args = parser.parse_args()
+
+
+    client = TranscriptionClient(host, port, lang, translate, model)
+    client()
